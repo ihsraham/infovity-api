@@ -3,6 +3,8 @@
     "builds": [{ "src": "api/index.js", "use": "@vercel/node" }],
     "routes": [{ "src": "/(.*)", "dest": "/api/index.js" }],
     "env": {
-      "MONGODB_URI": "@mongodb-uri"
+      "MONGODB_URI": "@mongodb-uri",
+      "FRONTEND_URL": "@frontend-url"
     }
   }
+  
