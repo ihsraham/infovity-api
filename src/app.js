@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
-const serverless = require('serverless-http');
 const registerRoutes = require('./routes/register');
 
 const app = express();
@@ -40,5 +39,4 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal Server Error' });
 });
 
-// ✅ Export as handler for Vercel
-module.exports = serverless(app);
+module.exports = app;
