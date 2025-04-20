@@ -11,18 +11,25 @@ app.use(helmet()); // Security headers
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
-// Configure CORS
-const corsOptions = {
-  origin: [
+// Get frontend URLs from environment variables
+const allowedOrigins = [
     'http://localhost:5173', // Vite dev server default
-    'http://localhost:3000',
-    'https://webinar-website.vercel.app'
-  ],
-  methods: ['GET', 'POST', 'OPTIONS'],
-  credentials: true,
-  maxAge: 86400 // 24 hours
-};
-app.use(cors(corsOptions));
+    'http://localhost:3000' 
+  ];
+  
+  // Add production frontend URL if defined in environment variables
+  if (process.env.FRONTEND_URL) {
+    allowedOrigins.push(process.env.FRONTEND_URL);
+  }
+  
+  // Configure CORS
+  const corsOptions = {
+    origin: allowedOrigins,
+    methods: ['GET', 'POST', 'OPTIONS'],
+    credentials: true,
+    maxAge: 86400 // 24 hours
+  };
+  app.use(cors(corsOptions));
 
 // Register routes
 app.use('/api/register', registerRoutes);
